@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, AppBar } from "@material-ui/core";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
@@ -13,6 +14,7 @@ import ListItem from "@material-ui/core/ListItem";
 import classNames from "classnames";
 import { pxToRem } from "theme";
 import { motion } from "framer-motion";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,9 +100,9 @@ function NavBar() {
     } else {
       setShow(false);
     }
-    if (scrollTop > 300 && scrollTop < 900) {
+    if (scrollTop > 300 && scrollTop < 1200) {
       setActiveNav("experience");
-    } else if (scrollTop > 900 && scrollTop < 1800) {
+    } else if (scrollTop > 1200 && scrollTop < 1800) {
       setActiveNav("education");
     } else if (scrollTop < 300) {
       setActiveNav("biography");
@@ -111,6 +113,29 @@ function NavBar() {
   window.onscroll = function () {
     scrollDetect();
   };
+
+  const navItems = [
+    {
+      name: "BIOGRAPHY",
+      scrollTo: "resume-biography",
+      className: biographyClassName,
+    },
+    {
+      name: "EXPERIENCE",
+      scrollTo: "resume-experience",
+      className: experienceClassName,
+    },
+    {
+      name: "EDUCATION",
+      scrollTo: "resume-education",
+      className: educationClassName,
+    },
+    {
+      name: "GET IN TOUCH",
+      scrollTo: "resume-contact",
+      className: contactClassName,
+    },
+  ];
 
   return (
     <>
@@ -139,59 +164,21 @@ function NavBar() {
                   justifyContent="space-between"
                   padding={pxToRem(2)}
                 >
-                  <motion.div
-                    initial={{ opacity: 0, y: -100 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ ease: "easeOut", delay: 0.2, duration: 1 }}
-                  >
-                    <Typography
-                      className={biographyClassName}
-                      variant="h5"
-                      onClick={() => scrollTo("resume-biography")}
+                  {navItems.map((item) => (
+                    <motion.div
+                      initial={{ opacity: 0, y: -100 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ ease: "easeOut", delay: 0.2, duration: 1 }}
                     >
-                      BIOGRAPHY
-                    </Typography>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: -100 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ ease: "easeOut", delay: 0.2, duration: 1 }}
-                  >
-                    <Typography
-                      className={experienceClassName}
-                      onClick={() => scrollTo("resume-experience")}
-                      variant="h5"
-                    >
-                      EXPERIENCE
-                    </Typography>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: -100 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ ease: "easeOut", delay: 0.2, duration: 1 }}
-                  >
-                    <Typography
-                      className={educationClassName}
-                      onClick={() => scrollTo("resume-education")}
-                      variant="h5"
-                    >
-                      EDUCATION
-                    </Typography>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: -100 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ ease: "easeOut", delay: 0.2, duration: 1 }}
-                  >
-                    <Typography
-                      className={contactClassName}
-                      onClick={() => scrollTo("resume-contact")}
-                      variant="h5"
-                    >
-                      GET IN TOUCH
-                    </Typography>
-                  </motion.div>
+                      <Typography
+                        className={item.className}
+                        variant="h5"
+                        onClick={() => scrollTo(item.scrollTo)}
+                      >
+                        {item.name}
+                      </Typography>
+                    </motion.div>
+                  ))}
                 </Box>
               </Box>
             </Box>
@@ -240,67 +227,28 @@ function NavBar() {
             <CloseIcon fontSize="large" />
           </IconButton>
         </Box>
-        <List>
-          <ListItem button>
-            <Typography
-              className={biographyClassName}
-              variant="h3"
-              onClick={() => {
-                setOpen(false);
-                scrollTo("resume-biography");
-              }}
-            >
-              BIOGRAPHY
-            </Typography>
-          </ListItem>
-          <ListItem button>
-            <motion.div
-              whileHover={{
-                color: "red",
-                textDecoration: "underline",
-                transition: {
-                  duration: 5,
-                  ease: "easeIn",
-                },
-              }}
-            >
-              <Typography
-                className={experienceClassName}
-                onClick={() => {
-                  setOpen(false);
-                  scrollTo("resume-experience");
-                }}
-                variant="h3"
-              >
-                EXPERIENCE
-              </Typography>
-            </motion.div>
-          </ListItem>
-          <ListItem button>
-            <Typography
-              className={educationClassName}
-              onClick={() => {
-                setOpen(false);
-                scrollTo("resume-education");
-              }}
-              variant="h3"
-            >
-              EDUCATION
-            </Typography>
-          </ListItem>
 
-          <ListItem button>
-            <Typography
-              className={contactClassName}
-              onClick={() => {
-                setOpen(false);
-                scrollTo("resume-contact");
-              }}
-              variant="h3"
-            >
-              GET IN TOUCH
-            </Typography>
-          </ListItem>
+        <List>
+          {navItems.map((item) => (
+            <ListItem button>
+              <motion.div
+                initial={{ opacity: 0, y: -100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ease: "easeOut", delay: 0.2, duration: 1 }}
+              >
+                <Typography
+                  className={item.className}
+                  variant="h5"
+                  onClick={() => {
+                    scrollTo(item.scrollTo);
+                    setOpen(false);
+                  }}
+                >
+                  {item.name}
+                </Typography>
+              </motion.div>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
 
@@ -312,4 +260,5 @@ function NavBar() {
     </>
   );
 }
+
 export default NavBar;

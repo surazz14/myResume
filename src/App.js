@@ -3,13 +3,14 @@ import { Provider, inject, observer } from "mobx-react";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import ColorSwitch from "Modulus/ColorSwitcher/colorSwitcher";
 import theme from "./theme";
 import store from "./entities/setUpStore";
 import Path from "./Route/route";
 import ReactGA from "react-ga";
 
 function WrapThemeProvider(props) {
-  const {color} = props
+  const { color } = props;
   return (
     <ThemeProvider theme={theme(color.selectedTheme)}>
       <CssBaseline />
@@ -32,6 +33,7 @@ function App() {
     <Provider {...store}>
       <WrapThemeProviderWrapper>
         <Path />
+        <ColorSwitch />
       </WrapThemeProviderWrapper>
     </Provider>
   );

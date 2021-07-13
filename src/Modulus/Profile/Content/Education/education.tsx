@@ -9,6 +9,7 @@ import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
+import Hidden from "@material-ui/core/Hidden";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const info = [
+const infos = [
   {
     left: {
       name: "KATHMANDU UNIVERSITY",
@@ -105,6 +106,14 @@ const info = [
 ];
 function Education() {
   const classes = useStyles();
+  const leftClassName = classNames({
+    [classes.contentRight]: true,
+    [classes.contentLeft]: false,
+  });
+  const rightClassName = classNames({
+    [classes.contentRight]: true,
+    [classes.contentLeft]: false,
+  });
 
   return (
     <Box>
@@ -114,97 +123,125 @@ function Education() {
         </Box>
       </Box>
       <Box width="88%">
-        <Timeline align="alternate">
-          {info.map((data: any, index: any) => {
-            const leftClassName = classNames({
-              [classes.contentRight]: true,
-              [classes.contentLeft]: false,
-            });
-            const rightClassName = classNames({
-              [classes.contentRight]: true,
-              [classes.contentLeft]: false,
-            });
-            const dotClassName = classNames({
-              [classes.dot]: index === 0,
-            });
-            return (
-              <TimelineItem className={classes.item}>
-                <TimelineOppositeContent className={leftClassName}>
-                  {data?.left?.name && (
-                    <Typography variant="h5" paragraph >
-                    {data.left.name}
-                    </Typography>
-                  )}
-                  {data?.left?.period && (
-                    <Typography color="textSecondary">
-                      {data.left.period}
-                    </Typography>
-                  )}
-                  {data?.left?.level && (
-                    <Typography variant="h5" paragraph>
-                      <b>{data?.left?.level}</b>
-                    </Typography>
-                  )}
-                  {data?.left?.courses && (
-                    <Typography color="textSecondary">
-                      {data?.left?.courses}
-                    </Typography>
-                  )}
-                  {data?.left?.link && (
-                    <Box display="flex" alignItems="center" mt={pxToRem(21)}>
-                      <BsLink45Deg size={pxToRem(24)} className={classes.icon} />
-                      <Link
-                        className={classes.link}
-                        href={data?.left?.link?.url}
-                      >
-                        {data?.left?.link?.text}
-                      </Link>
-                    </Box>
-                  )}
-                </TimelineOppositeContent>
-                <TimelineSeparator>
-                  <TimelineDot className={dotClassName} />
-                  {index !== info.length - 1 && (
-                    <TimelineConnector className={classes.connector} />
-                  )}
-                </TimelineSeparator>
-                <TimelineContent className={rightClassName}>
-                  {data?.right?.name && (
-                    <Typography variant="h5" paragraph>
-                      {data.right.name}
-                    </Typography>
-                  )}
-                  {data?.right?.period && (
-                    <Typography color="textSecondary">
-                      {data.right.period}
-                    </Typography>
-                  )}
-                  {data?.right?.level && (
-                    <Typography variant="h5" paragraph>
-                      <b>{data?.right?.level}</b>
-                    </Typography>
-                  )}
-                  {data?.right?.courses && (
-                    <Typography color="textSecondary">
-                      {data?.right?.courses}
-                    </Typography>
-                  )}
-                  {data?.right?.link && (
-                    <Box display="flex" alignItems="center" mt={pxToRem(21)}>
-                      <BsLink45Deg size={pxToRem(24)} className={classes.icon} />
-                      <Link
-                        className={classes.link}
-                        href={data?.right?.link?.url}
-                      >
-                        {data?.right?.link?.text}
-                      </Link>
-                    </Box>
-                  )}
-                </TimelineContent>
-              </TimelineItem>
-            );
-          })}
-        </Timeline>
+        <Hidden smDown>
+          <Timeline align="alternate">
+            {infos.map((data: any, index: any) => {
+              const dotClassName = classNames({
+                [classes.dot]: index === 0,
+              });
+              return (
+                <TimelineItem className={classes.item}>
+                  <TimelineOppositeContent className={leftClassName}>
+                    {data?.left?.name && (
+                      <Typography variant="h5" paragraph>
+                        {data.left.name}
+                      </Typography>
+                    )}
+                    {data?.left?.period && (
+                      <Typography color="textSecondary">
+                        {data.left.period}
+                      </Typography>
+                    )}
+                    {data?.left?.level && (
+                      <Typography variant="h5" paragraph>
+                        <b>{data?.left?.level}</b>
+                      </Typography>
+                    )}
+                    {data?.left?.courses && (
+                      <Typography color="textSecondary">
+                        {data?.left?.courses}
+                      </Typography>
+                    )}
+                    {data?.left?.link && (
+                      <Box display="flex" alignItems="center" mt={pxToRem(21)}>
+                        <BsLink45Deg
+                          size={pxToRem(24)}
+                          className={classes.icon}
+                        />
+                        <Link
+                          className={classes.link}
+                          href={data?.left?.link?.url}
+                        >
+                          {data?.left?.link?.text}
+                        </Link>
+                      </Box>
+                    )}
+                  </TimelineOppositeContent>
+                  <TimelineSeparator>
+                    <TimelineDot className={dotClassName} />
+                    {index !== infos.length - 1 && (
+                      <TimelineConnector className={classes.connector} />
+                    )}
+                  </TimelineSeparator>
+                  <TimelineContent className={rightClassName}>
+                    {data?.right?.name && (
+                      <Typography variant="h5" paragraph>
+                        {data.right.name}
+                      </Typography>
+                    )}
+                    {data?.right?.period && (
+                      <Typography color="textSecondary">
+                        {data.right.period}
+                      </Typography>
+                    )}
+                    {data?.right?.level && (
+                      <Typography variant="h5" paragraph>
+                        <b>{data?.right?.level}</b>
+                      </Typography>
+                    )}
+                    {data?.right?.courses && (
+                      <Typography color="textSecondary">
+                        {data?.right?.courses}
+                      </Typography>
+                    )}
+                    {data?.right?.link && (
+                      <Box display="flex" alignItems="center" mt={pxToRem(21)}>
+                        <BsLink45Deg
+                          size={pxToRem(24)}
+                          className={classes.icon}
+                        />
+                        <Link
+                          className={classes.link}
+                          href={data?.right?.link?.url}
+                        >
+                          {data?.right?.link?.text}
+                        </Link>
+                      </Box>
+                    )}
+                  </TimelineContent>
+                </TimelineItem>
+              );
+            })}
+          </Timeline>
+        </Hidden>
+        <Hidden mdUp>
+          {infos.map((info) => (
+            <Box mt={pxToRem(16)}>
+              <Typography variant="h6">
+                {info?.left.name || info?.right?.name}
+              </Typography>
+              <Typography color="textSecondary">
+                {info?.left?.period || info?.right?.period}
+              </Typography>
+              <Typography color="textSecondary">
+                <b>{info?.left?.level || info?.right?.level}</b>
+              </Typography>
+              <Typography color="textSecondary">
+                {info?.left?.courses || info?.right?.courses}
+              </Typography>
+              <Box display="flex" alignItems="center" >
+                <BsLink45Deg size={pxToRem(24)} className={classes.icon} />
+                <Link
+                  className={classes.link}
+                  href={info?.left?.link?.url || info?.right?.link?.url}
+                >
+                  {info?.left?.link?.text || info?.right?.link?.text}
+                </Link>
+              </Box>
+              <br />
+            </Box>
+          ))}
+        </Hidden>
       </Box>
     </Box>
   );

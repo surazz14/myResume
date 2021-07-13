@@ -10,6 +10,7 @@ import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
+import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import { BsLink45Deg } from "react-icons/bs";
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const info = [
+const infos = [
   {
     left: {
       name: "Zegal",
@@ -111,8 +112,9 @@ function Education() {
         </Box>
       </Box>
       <Box width="88%">
+      <Hidden smDown>
         <Timeline align="alternate">
-          {info.map((data: any, index: any) => {
+          {infos.map((data: any, index: any) => {
             const leftClassName = classNames({
               [classes.contentRight]: true,
               [classes.contentLeft]: false,
@@ -164,7 +166,7 @@ function Education() {
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineDot className={dotClassName} />
-                  {index !== info.length - 1 && (
+                  {index !== infos.length - 1 && (
                     <TimelineConnector className={classes.connector} />
                   )}
                 </TimelineSeparator>
@@ -208,6 +210,35 @@ function Education() {
             );
           })}
         </Timeline>
+        </Hidden>
+        <Hidden mdUp>
+          {infos.map((info) => (
+            <Box mt={pxToRem(16)}>
+              <Typography variant="h6">
+                {info?.left.name || info?.right?.name}
+              </Typography>
+              <Typography color="textSecondary">
+                {info?.left?.period || info?.right?.period}
+              </Typography>
+              <Typography color="textSecondary">
+                <b>{info?.left?.level || info?.right?.level}</b>
+              </Typography>
+              <Typography color="textSecondary">
+                {info?.left?.courses || info?.right?.courses}
+              </Typography>
+              <Box display="flex" alignItems="center" >
+                <BsLink45Deg size={pxToRem(24)} className={classes.icon} />
+                <Link
+                  className={classes.link}
+                  href={info?.left?.link?.url || info?.right?.link?.url}
+                >
+                  {info?.left?.link?.text || info?.right?.link?.text}
+                </Link>
+              </Box>
+              <br />
+            </Box>
+          ))}
+        </Hidden>
       </Box>
     </Box>
   );

@@ -1,4 +1,6 @@
 import React from "react";
+import { pxToRem } from "theme";
+import { motion } from "framer-motion";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -8,8 +10,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import BorderColorIcon from "@material-ui/icons/BorderColor";
-import { pxToRem } from "theme";
-import { motion } from "framer-motion";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   listIcon: {
@@ -64,20 +66,23 @@ const biographyContent = {
   personalInfo: {
     header: "PERSONAL INFO",
     description:
-      "Hello my name in Suraj Dhakal.I am graduate in computer science and engineering from Kathmandu University and current working as Frontend Developer in Zegal.",
+      "Hello I am Suraj Dhakal.I am a full-stack web developer with the more than 3 year of experience.",
     name: "Suraj Dhakal",
     phoneNumber: "977 9862155911",
     email: "surajdhakal427@gmail.com",
+    linkedin: "https://www.linkedin.com/in/suraj-dhakal-715139154/",
     location: "biratnagar, Nepal",
   },
   description:
-    "Gain visibility and authority with a unique mix of content strategy and copywriting. I seek to understand your customers and the problems they need to solve. Then I use persuasion science and marketing strategy to create one of a kind content that rapidly drives traffic and builds authority.",
+    "Gain visibility and authority with a unique mix of design and engineering. I seek to understand your customers and the problems they need to solve. Then I use persuasion science and engineering strategy to create web app that fullfil your business requirement.",
   subDescription:
-    "Generating lead magnets, content creation, editing and optimization, multi funnel marketing – these are just some of the services I offer.",
+    "Creating responsive websites, web app according to business requirement, dashboard for companies, backend apis with new technology.",
 };
 
 function Bigrophy() {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const {
     title,
     mainSkills: { header1, header2, skills, values },
@@ -115,9 +120,11 @@ function Bigrophy() {
               <Typography color="textSecondary" paragraph>
                 {personalInfo?.description}
               </Typography>
-              <Typography color="textSecondary"></Typography>
               <Typography color="textSecondary">
-                {personalInfo.email}{" "}
+                {personalInfo.phoneNumber}
+              </Typography>
+              <Typography color="textSecondary">
+                {personalInfo.email}
               </Typography>
 
               <Typography color="textSecondary"></Typography>
@@ -140,7 +147,7 @@ function Bigrophy() {
                 {subDescription}
               </Typography>
               <br />
-              <Grid container spacing={10}>
+              <Grid container spacing={isMobile ? 2 : 10}>
                 <Grid md={6} xs={12} item>
                   <img src={image1} className={classes.image} alt="img" />
                 </Grid>

@@ -10,6 +10,8 @@ import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import PhoneOutlinedIcon from "@material-ui/icons/PhoneOutlined";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import { pxToRem } from "theme";
 
@@ -129,6 +131,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Contact() {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <>
@@ -138,7 +142,7 @@ function Contact() {
         </Box>
       </Box>
       <Box>
-        <Grid container spacing={10}>
+        <Grid container spacing={isMobile ? 2 : 8}>
           <Grid item xs={12} md={3}>
             <Typography variant="h5" paragraph>
               <BorderColorIcon color="secondary" fontSize="small" /> CONTACT ME
@@ -158,7 +162,7 @@ function Contact() {
           </Grid>
           <Grid item xs={12} md={9}>
             <Grid container spacing={4}>
-              <Grid xs={12} md={6}  item>
+              <Grid xs={12} md={6} item>
                 {/* @ts-ignore */}
                 <TextField
                   className={classes.textField}
@@ -181,11 +185,11 @@ function Contact() {
                   }}
                   InputLabelProps={{
                     className: classes.label,
-                    variant: 'outlined',
+                    variant: "outlined",
                   }}
                 />
               </Grid>
-              <Grid xs={12} md={6}  item>
+              <Grid xs={12} md={6} item>
                 {/* @ts-ignore */}
                 <TextField
                   className={classes.textField}
@@ -240,7 +244,7 @@ function Contact() {
                   }}
                 />
               </Grid>
-              <Grid xs={12} md={6}  item>
+              <Grid xs={12} md={6} item>
                 {/* @ts-ignore */}
                 <TextField
                   className={classes.textField}

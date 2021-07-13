@@ -5,7 +5,6 @@ import Experience from "./Experience/experience";
 import Biography from "./Biography/biography";
 import Contact from "./Contact/contact";
 import { pxToRem } from "theme";
-import ColorSwitcher from '../../ColorSwitcher/colorSwitcher'
 
 function Content() {
   return (
@@ -22,9 +21,6 @@ function Content() {
       <div id="resume-contact">
         <Contact />
       </div>
-      <Box>
-        <ColorSwitcher/>
-      </Box>
     </Box>
   );
 }
