@@ -35,27 +35,17 @@ const biographyContent = {
     header1: "MAIN SKILLS",
     header2: "Values",
     skills: [
-      {
-        skill: "Can create web app frontend with React js.",
-      },
-      {
-        skill: "Can create web app backend with Node js and python.",
-      },
-      {
-        skill: "Can create api with emerging technology like graphql.",
-      },
-      {
-        skill: "Can Write test code to make app bug free.",
-      },
-      {
-        skill: "Can Write performance efficient code. ",
-      },
+      'Can create web app frontend with React js.',
+      "Can create web app backend with Node js and python.",
+      "Can create api with emerging technology like graphql",
+      "Can Write test code to make app bug free.",
+      "Can Write performance efficient code. "
     ],
     values: [
-      { value: "There is always something" },
-      { value: "Learn and be curious" },
-      { value: "Focus on the key inputs" },
-      { value: "Keep it simple" },
+      "There is always something",
+      "Learn and be curious",
+      "Focus on the key inputs",
+      "Keep it simple"
     ],
   },
 
@@ -71,6 +61,7 @@ const biographyContent = {
     phoneNumber: "977 9862155911",
     email: "surajdhakal427@gmail.com",
     linkedin: "https://www.linkedin.com/in/suraj-dhakal-715139154/",
+    github: "",
     location: "biratnagar, Nepal",
   },
   description:
@@ -167,7 +158,7 @@ function Bigrophy() {
                           <FiberManualRecordIcon className={classes.icon} />
                         </ListItemIcon>
                         <Typography variant="subtitle1" color="textSecondary">
-                          {skill.skill}
+                          {skill}
                         </Typography>
                       </ListItem>
                     ))}
@@ -184,7 +175,7 @@ function Bigrophy() {
                           <FiberManualRecordIcon className={classes.icon} />
                         </ListItemIcon>
                         <Typography variant="subtitle1" color="textSecondary">
-                          {value.value}
+                          {value}
                         </Typography>{" "}
                       </ListItem>
                     ))}

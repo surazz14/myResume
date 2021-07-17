@@ -12,8 +12,12 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import PhoneOutlinedIcon from "@material-ui/icons/PhoneOutlined";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import Snackbar from "@material-ui/core/Snackbar";
+
 import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import { pxToRem } from "theme";
+import emailjs from "emailjs-com";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -131,12 +135,52 @@ const useStyles = makeStyles((theme) => ({
 
 function Contact() {
   const classes = useStyles();
+  const [emailData, setEmailData] = React.useState({
+    from_name: "",
+    email: "",
+    phoneNumber: "",
+    subject: "",
+    message: "",
+    receiverEmail: "surajdhakal427@gmail.com",
+  });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [open, setOpen] = React.useState(false);
+
+  const onChangeEmailData = (event: any) => {
+    setEmailData({ ...emailData, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = () => {
+    try {
+      emailjs.send(
+        "service_eg8l1hp",
+        "template_2qay1sr",
+        {
+          ...emailData,
+        },
+        "user_Or9MJn8Ya9S3ymcdBvEwc"
+      );
+      setOpen(true);
+    } catch (e) {
+      console.info(e);
+    }
+  };
 
   return (
     <>
       <Box borderBottom="solid 1px #e9e3e2" marginBottom={pxToRem(56)}>
+        <Snackbar
+          open={open}
+          autoHideDuration={2000}
+          onClose={() => {
+            setOpen(false);
+          }}
+        >
+          <Alert variant="filled" severity="success">
+            Email sent
+          </Alert>
+        </Snackbar>
         <Box lineHeight={pxToRem(30)}>
           <Typography variant="h2">Get In touch</Typography>
         </Box>
@@ -167,6 +211,8 @@ function Contact() {
                 <TextField
                   className={classes.textField}
                   id="name"
+                  name="from_name"
+                  onChange={onChangeEmailData}
                   size="medium"
                   variant="outlined"
                   label="Name"
@@ -194,6 +240,8 @@ function Contact() {
                 <TextField
                   className={classes.textField}
                   id="name"
+                  name="email"
+                  onChange={onChangeEmailData}
                   margin="none"
                   variant="outlined"
                   label="Email"
@@ -223,6 +271,8 @@ function Contact() {
                 <TextField
                   className={classes.textField}
                   id="phone"
+                  name="phoneNumber"
+                  onChange={onChangeEmailData}
                   margin="none"
                   variant="outlined"
                   label="Phone"
@@ -249,6 +299,8 @@ function Contact() {
                 <TextField
                   className={classes.textField}
                   id="Subject"
+                  name="subject"
+                  onChange={onChangeEmailData}
                   variant="outlined"
                   margin="none"
                   label="Subject"
@@ -273,7 +325,9 @@ function Contact() {
             <br />
             <TextField
               className={classes.textField}
-              id="Subject"
+              id="message"
+              name="message"
+              onChange={onChangeEmailData}
               variant="outlined"
               margin="none"
               rows="7"
@@ -294,6 +348,7 @@ function Contact() {
             <br />
             <Button
               variant="contained"
+              onClick={handleSubmit}
               color="secondary"
               className={classes.button}
             >
