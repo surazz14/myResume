@@ -12,7 +12,7 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import PhoneOutlinedIcon from "@material-ui/icons/PhoneOutlined";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import { Alert } from "@material-ui/lab";
 import Snackbar from "@material-ui/core/Snackbar";
 
 import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
