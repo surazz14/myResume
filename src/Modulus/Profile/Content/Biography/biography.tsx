@@ -70,7 +70,7 @@ const biographyContent = {
     "Creating responsive websites, web app according to business requirement, dashboard for companies, backend apis with new technology.",
 };
 
-function Bigrophy() {
+function Biography() {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -190,4 +190,4 @@ function Bigrophy() {
   );
 }
 
-export default Bigrophy;
+export default Biography;
