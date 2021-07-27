@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
   cssOutlinedInput: {
+    color:"black",
     "&$cssFocused $notchedOutline": {
       borderColor: `solid 1px ${theme.palette.secondary.main}`,
     },

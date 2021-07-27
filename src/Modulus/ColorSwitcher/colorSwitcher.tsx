@@ -36,7 +36,6 @@ function ColorSwitcher(props: any) {
   const {
     color: { themes, switchTheme },
   } = props;
-  console.log(props, "this is props----");
   return (
     <>
       <Box className={classes.switcher}>

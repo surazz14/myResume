@@ -4,6 +4,7 @@ import Hidden from "@material-ui/core/Hidden";
 import { pxToRem } from "theme";
 
 function Footer() {
+
   return (
     <Hidden smDown>
       <Box

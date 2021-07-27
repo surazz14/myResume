@@ -15,7 +15,6 @@ import classNames from "classnames";
 import { pxToRem } from "theme";
 import { motion } from "framer-motion";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: `0 ${theme.typography.pxToRem(40)}`,
@@ -57,9 +56,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NavBar() {
+function NavBar({ history }: any) {
   const classes = useStyles();
-  const [activeNav, setActiveNav] = useState("biography");
+  const [activeNav, setActiveNav] = useState("");
   const [show, setShow] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const biographyClassName = classNames({
@@ -77,6 +76,10 @@ function NavBar() {
   const contactClassName = classNames({
     [classes.info]: true,
     active: activeNav === "contact",
+  });
+  const blogClassName = classNames({
+    [classes.info]: true,
+    active: activeNav === "blog",
   });
   const scrollToTop = (divId: any) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -106,13 +109,23 @@ function NavBar() {
       setActiveNav("education");
     } else if (scrollTop < 300) {
       setActiveNav("biography");
-    } else if (scrollTop > 1800) {
+    } else if (scrollTop > 1800 && scrollTop < 2700) {
+      setActiveNav("blog");
+    } else if (scrollTop > 2700) {
       setActiveNav("contact");
     }
   };
   window.onscroll = function () {
-    scrollDetect();
+    if (history?.location?.pathname === "/") {
+      scrollDetect();
+    }
   };
+
+  React.useEffect(() => {
+    if (history?.location?.pathname === "/") {
+      setActiveNav("biography");
+    }
+  }, [history]);
 
   const navItems = [
     {
@@ -129,6 +142,11 @@ function NavBar() {
       name: "EDUCATION",
       scrollTo: "resume-education",
       className: educationClassName,
+    },
+    {
+      name: "BLOG",
+      scrollTo: "resume-blog",
+      className: blogClassName,
     },
     {
       name: "GET IN TOUCH",
@@ -149,7 +167,7 @@ function NavBar() {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Box width="50%">
+                <Box width="40%">
                   <motion.div
                     initial={{ opacity: 0, y: -100 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -173,7 +191,12 @@ function NavBar() {
                       <Typography
                         className={item.className}
                         variant="h5"
-                        onClick={() => scrollTo(item.scrollTo)}
+                        onClick={() => {
+                          history.push("/");
+                          setTimeout(() => {
+                            scrollTo(item.scrollTo);
+                          }, 10);
+                        }}
                       >
                         {item.name}
                       </Typography>

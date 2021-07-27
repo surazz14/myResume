@@ -1,25 +1,11 @@
 import React from "react";
-import { Provider, inject, observer } from "mobx-react";
-
-import { ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import ColorSwitch from "Modulus/ColorSwitcher/colorSwitcher";
-import theme from "./theme";
-import store from "./entities/setUpStore";
-import Path from "./Route/route";
+import { inject, observer } from "mobx-react";
+import { useQuery } from "@apollo/client";
+import ColorSwitch from "modulus/colorSwitcher/colorSwitcher";
+import Loading from "common/component/loading/loading";
+import { GET_ALL_BLOGS } from "common/utility/graphql/query";
+import Path from "./route/route";
 import ReactGA from "react-ga";
-
-function WrapThemeProvider(props) {
-  const { color } = props;
-  return (
-    <ThemeProvider theme={theme(color.selectedTheme)}>
-      <CssBaseline />
-      {props.children}
-    </ThemeProvider>
-  );
-}
-
-const WrapThemeProviderWrapper = inject("color")(observer(WrapThemeProvider));
 
 function initializeAnalytics() {
   const trackingId = "UA-177748145-1"; // Replace with your Google Analytics tracking ID
@@ -27,16 +13,53 @@ function initializeAnalytics() {
   ReactGA.pageview("/");
 }
 
-function App() {
+function App({ blogs }) {
+  const [loading, setLoading] = React.useState(true);
+  const { data } = useQuery(GET_ALL_BLOGS);
+
+  React.useEffect(() => {
+    if (data) {
+      blogs.setBlogs(data?.blogs?.blogs);
+    }
+  }, [data, blogs]);
+
+  const [progress, setProgress] = React.useState(0);
+  const [value, setValue] = React.useState(1996);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) =>
+        prevProgress > 100 ? 0 : prevProgress + 4
+      );
+      setValue((prevValue) => prevValue + 1);
+    }, 100);
+
+    if (progress > 100) {
+      clearInterval(timer);
+    }
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [progress]);
+
+  React.useEffect(() => {
+    if (progress >= 100) {
+      setLoading(false);
+    }
+  }, [progress]);
+
+  if (loading)
+    return (
+      <Loading loading={loading} size={100} value={value} progress={progress} />
+    );
   initializeAnalytics();
   return (
-    <Provider {...store}>
-      <WrapThemeProviderWrapper>
-        <Path />
-        <ColorSwitch />
-      </WrapThemeProviderWrapper>
-    </Provider>
+    <>
+      <Path />
+      <ColorSwitch />
+    </>
   );
 }
 
-export default App;
+export default inject("blogs")(observer(App));

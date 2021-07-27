@@ -254,7 +254,7 @@ const themeConfig = (value) =>
       useNextVariants: true,
 
       h1: {
-        fontSize: pxToRem(40),
+        fontSize: pxToRem(48),
         fontWeight: font.semiBold,
       },
 
